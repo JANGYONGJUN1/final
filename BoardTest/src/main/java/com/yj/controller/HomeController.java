@@ -15,7 +15,7 @@ public class HomeController {
 	@Autowired
 	BoardService bSvc;
 	
-	@RequestMapping("/하핳")
+	@RequestMapping("/하핳 오태시기~")
 	public String home() {
 
 		return "home";
