@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardMapper">		<!-- namespace = 패키지랑 비슷한 개념이라 생각하면됨 -->
+	<select id="allCount" resultType="java.lang.Integer">  
+	<!-- id -> 스프링 매퍼에서는 sql문에 각각의 이름을 붙여줌 BoardMapper.allCount가 풀네임이 됨 -->
+	<!-- resultType -> 쿼리의 결과값 정수 혹은 문자열 등 -->
+		<![CDATA[ 
+			SELECT COUNT(*) FROM board1
+		]]>
+	</select>
+	
+	<select id="listByPage" resultType="com.yj.dto.BoardDto">
+<!-- 	mybatis <![CDATA[]]> 헷갈리니까 그냥 sql문에 다 써 (원래는 부등호 나올때 씀)
+ 
+		- mapper SQL에 값을 전달 (cf.pstmt에 물음표(?)를 대신하던 값들)
+		-> 방법1) DTO객체를 전달.
+		-> 방법2) HashMap 객체 전달. 
+-->
+
+<!-- 	게시글 리스트(페이지네이션) 쿼리 -->
+	<![CDATA[
+		SELECT  t2.* 
+		FROM    (SELECT rownum rnum, t1.*  
+		        FROM    (SELECT *  
+		                FROM board1 
+		                ORDER BY bno DESC) t1) t2  
+		WHERE   rnum>=#{start} AND rnum<=#{end}
+	]]>
+	</select>
+	
+	<select id="boardDetail" resultType="com.yj.dto.BoardDto">
+		SELECT *
+		FROM board1
+		WHERE bno = #{bno}
+	</select>
+	
+	<insert id="boardWrite">
+		INSERT INTO board1(bno, title, content, writer, writedate)
+		VALUES(SEQ_BOARD1.nextval, #{title}, #{content}, #{writer}, sysdate)
+	</insert>
+	
+	<update id="boardUpdate">
+		UPDATE board1
+		SET 
+	    title = #{title},
+	    content = #{content},
+	    writer = #{writer}
+		WHERE 
+	    bno = #{bno}
+	</update>
+	
+	<delete id="boardDelete">
+		DELETE 
+		FROM board1
+		WHERE bno = #{bno}
+	</delete>
+	
+	
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
