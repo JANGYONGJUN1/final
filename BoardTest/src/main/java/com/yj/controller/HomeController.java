@@ -15,7 +15,7 @@ public class HomeController {
 	@Autowired
 	BoardService bSvc;
 	
-	@RequestMapping("/")
+	@RequestMapping("/하핳")
 	public String home() {
 
 		return "home";
@@ -23,7 +23,7 @@ public class HomeController {
 
 	@RequestMapping("/board/list")
 	public String list(Integer page, Model model) {
-		int pageNum = 1;  // 현제페이지 : 초기값1
+		int pageNum = 1;  // �쁽�젣�럹�씠吏� : 珥덇린媛�1
 		if(page != null) {
 			pageNum = page;
 		}
@@ -48,7 +48,7 @@ public class HomeController {
 	
 	@RequestMapping("/board/detail")
 	public String detail(Integer bno, Model model) {
-		System.out.println("들어옴");
+		System.out.println("�뱾�뼱�샂");
 		
 		BoardDto dto = bSvc.getBoardDetail(bno);
 			model.addAttribute("bno",bno);
@@ -57,13 +57,13 @@ public class HomeController {
 		return "Board_detail";
 	}
 	
-	//게시글 작성폼
+	//寃뚯떆湲� �옉�꽦�뤌
 	@RequestMapping("/board/write/form")
 	public String insertForm() {
 		return "Board_write";
 	}
 	
-	// 게시글 작성
+	// 寃뚯떆湲� �옉�꽦
 	@RequestMapping("/board/write")	
 	public String insert(BoardDto dto) {
 //		BoardDto dto = new BoardDto(0,title,content,writer,"2024-04-04");
